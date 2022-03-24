@@ -1,32 +1,46 @@
 import React, { useState, useEffect, Fragment } from "react";
-import axios from "axios";
 import Airline from "./Airline";
-const API = "http://localhost:3000/api/v1/airlines";
+import styled from "styled-components";
 
-function Airlines() {
-  const [airlines, setAirlines] = useState([]);
+const Home = styled.div`
+  text-align: center;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+const Header = styled.div`
+  padding: 100px 100px 10px 100px;
 
-  useEffect(() => {
-    axios
-      .get(API)
-      .then((resp) => {
-        setAirlines(resp.data.data);
-      })
-      .catch((resp) => console.log(resp));
-  }, [airlines.length]);
+  h1 {
+    font-size: 42px;
+  }
+`;
+const Subheader = styled.div`
+  font-weight: 300;
+  font-size: 26px;
+`;
 
+const Grid = styled.div`
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gird-gap: 20px;
+width: 100%
+padding: 20px;
+`;
+
+function Airlines({ airlines }) {
   const grid = airlines.map((item) => {
     return <Airline key={item.attributes.name} props={item} />;
   });
 
   return (
-    <div className="home">
-      <div className="header">
+    <Home>
+      <Header>
         <h1>Airline Reviews</h1>
-        <div className="subheader">Honest, unbaised airline reviews</div>
-      </div>
-      <div className="grid">{grid}</div>
-    </div>
+        <Subheader>Honest, unbaised airline reviews</Subheader>
+      </Header>
+      <Grid>{grid}</Grid>
+    </Home>
   );
 }
 
